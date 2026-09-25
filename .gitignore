@@ -1,0 +1,11 @@
+dataset/
+output/*.tsv
+*.zip
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+artifacts/
+models/
+*.pdf
+data/
+logs/

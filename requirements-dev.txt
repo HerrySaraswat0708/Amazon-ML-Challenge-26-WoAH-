@@ -1,0 +1,5 @@
+-r code/business_entity_resolution/requirements.txt
+jupyterlab
+ipykernel
+matplotlib
+seaborn

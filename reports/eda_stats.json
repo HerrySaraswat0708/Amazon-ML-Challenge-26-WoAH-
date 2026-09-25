@@ -1,0 +1,560 @@
+{
+ "pos_pairs_by_src_country": {
+  "S2-India": {
+   "name_raw_tsr": {
+    "mean": 71.27,
+    "p10": 9.523809523809518,
+    "p50": 91.30434782608695
+   },
+   "name_norm_tsr": {
+    "mean": 93.52,
+    "p10": 82.92682926829268,
+    "p50": 100.0
+   },
+   "name_core_tsr": {
+    "mean": 94.49,
+    "p10": 78.94736842105263,
+    "p50": 100.0
+   },
+   "name_core_jacc": {
+    "mean": 0.8,
+    "p10": 0.3333333333333333,
+    "p50": 1.0
+   },
+   "addr_raw_tsr": {
+    "mean": 89.41,
+    "p10": 78.94736842105263,
+    "p50": 94.87179487179488
+   },
+   "addr_norm_tsr": {
+    "mean": 94.62,
+    "p10": 92.6829268292683,
+    "p50": 100.0
+   },
+   "name_core_exact": 64.67,
+   "addr_empty": 3.9,
+   "house_eq": 65.95,
+   "state_eq": 94.87,
+   "state_missing": 3.9,
+   "is_translit": 23.63,
+   "has_alias": 0.0,
+   "legal_eq": 73.66,
+   "n": 58210
+  },
+  "S2-US": {
+   "name_raw_tsr": {
+    "mean": 90.81,
+    "p10": 70.27027027027027,
+    "p50": 98.50746268656717
+   },
+   "name_norm_tsr": {
+    "mean": 93.57,
+    "p10": 80.0,
+    "p50": 100.0
+   },
+   "name_core_tsr": {
+    "mean": 93.94,
+    "p10": 77.77777777777777,
+    "p50": 100.0
+   },
+   "name_core_jacc": {
+    "mean": 0.78,
+    "p10": 0.3333333333333333,
+    "p50": 1.0
+   },
+   "addr_raw_tsr": {
+    "mean": 86.71,
+    "p10": 72.72727272727272,
+    "p50": 93.10344827586206
+   },
+   "addr_norm_tsr": {
+    "mean": 91.73,
+    "p10": 78.94736842105263,
+    "p50": 100.0
+   },
+   "name_core_exact": 56.79,
+   "addr_empty": 4.9,
+   "house_eq": 76.53,
+   "state_eq": 94.88,
+   "state_missing": 4.9,
+   "is_translit": 0.0,
+   "has_alias": 0.0,
+   "legal_eq": 71.05,
+   "n": 87033
+  },
+  "S3-India": {
+   "name_raw_tsr": {
+    "mean": 78.65,
+    "p10": 11.42857142857143,
+    "p50": 93.33333333333333
+   },
+   "name_norm_tsr": {
+    "mean": 91.62,
+    "p10": 77.27272727272728,
+    "p50": 100.0
+   },
+   "name_core_tsr": {
+    "mean": 92.58,
+    "p10": 70.58823529411765,
+    "p50": 100.0
+   },
+   "name_core_jacc": {
+    "mean": 0.76,
+    "p10": 0.3333333333333333,
+    "p50": 1.0
+   },
+   "addr_raw_tsr": {
+    "mean": 84.21,
+    "p10": 63.829787234042556,
+    "p50": 91.42857142857143
+   },
+   "addr_norm_tsr": {
+    "mean": 93.48,
+    "p10": 86.07594936708861,
+    "p50": 100.0
+   },
+   "name_core_exact": 60.71,
+   "addr_empty": 4.12,
+   "house_eq": 65.04,
+   "state_eq": 94.65,
+   "state_missing": 4.12,
+   "is_translit": 13.34,
+   "has_alias": 2.74,
+   "legal_eq": 71.04,
+   "n": 61985
+  },
+  "S3-US": {
+   "name_raw_tsr": {
+    "mean": 90.91,
+    "p10": 70.27027027027027,
+    "p50": 100.0
+   },
+   "name_norm_tsr": {
+    "mean": 93.65,
+    "p10": 80.0,
+    "p50": 100.0
+   },
+   "name_core_tsr": {
+    "mean": 93.93,
+    "p10": 78.04878048780488,
+    "p50": 100.0
+   },
+   "name_core_jacc": {
+    "mean": 0.78,
+    "p10": 0.3333333333333333,
+    "p50": 1.0
+   },
+   "addr_raw_tsr": {
+    "mean": 81.49,
+    "p10": 68.08510638297872,
+    "p50": 86.15384615384616
+   },
+   "addr_norm_tsr": {
+    "mean": 92.54,
+    "p10": 81.25,
+    "p50": 100.0
+   },
+   "name_core_exact": 57.46,
+   "addr_empty": 4.56,
+   "house_eq": 77.51,
+   "state_eq": 95.21,
+   "state_missing": 4.56,
+   "is_translit": 0.0,
+   "has_alias": 4.42,
+   "legal_eq": 75.06,
+   "n": 92772
+  }
+ },
+ "pos_pairs_all": {
+  "name_raw_tsr": {
+   "mean": 84.54,
+   "p10": 43.47826086956522,
+   "p50": 96.15384615384616
+  },
+  "name_norm_tsr": {
+   "mean": 93.18,
+   "p10": 80.0,
+   "p50": 100.0
+  },
+  "name_core_tsr": {
+   "mean": 93.76,
+   "p10": 76.47058823529412,
+   "p50": 100.0
+  },
+  "name_core_jacc": {
+   "mean": 0.78,
+   "p10": 0.3333333333333333,
+   "p50": 1.0
+  },
+  "addr_raw_tsr": {
+   "mean": 85.1,
+   "p10": 70.0,
+   "p50": 91.07142857142857
+  },
+  "addr_norm_tsr": {
+   "mean": 92.9,
+   "p10": 83.33333333333333,
+   "p50": 100.0
+  },
+  "name_core_exact": 59.34,
+  "addr_empty": 4.44,
+  "house_eq": 72.41,
+  "state_eq": 94.93,
+  "state_missing": 4.44,
+  "is_translit": 7.34,
+  "has_alias": 1.93,
+  "legal_eq": 72.79,
+  "n": 300000
+ },
+ "pos_taxonomy_pct": {
+  "name_strong_addr_strong": 92.43,
+  "name_weak_addr_strong (address-only match)": 3.0,
+  "name_strong_addr_weak_or_empty (name-only match)": 4.55,
+  "both_weak": 0.02
+ },
+ "random_neg_same_country": {
+  "name_raw_tsr": {
+   "mean": 32.55,
+   "p10": 19.354838709677423,
+   "p50": 31.8840579710145
+  },
+  "name_norm_tsr": {
+   "mean": 35.83,
+   "p10": 23.529411764705884,
+   "p50": 33.9622641509434
+  },
+  "name_core_tsr": {
+   "mean": 30.95,
+   "p10": 20.689655172413794,
+   "p50": 30.769230769230774
+  },
+  "name_core_jacc": {
+   "mean": 0.0,
+   "p10": 0.0,
+   "p50": 0.0
+  },
+  "addr_raw_tsr": {
+   "mean": 35.15,
+   "p10": 28.26086956521739,
+   "p50": 35.82089552238806
+  },
+  "addr_norm_tsr": {
+   "mean": 33.7,
+   "p10": 25.0,
+   "p50": 34.61538461538461
+  },
+  "name_core_exact": 0.0,
+  "addr_empty": 3.42,
+  "house_eq": 0.33,
+  "state_eq": 5.94,
+  "state_missing": 3.42,
+  "is_translit": 5.56,
+  "has_alias": 1.45,
+  "legal_eq": 32.51,
+  "n": 156178
+ },
+ "s1_name_core_dup": {
+  "s1_entities": 2206821,
+  "distinct_name_core": 1321358,
+  "pct_s1_sharing_name_core_with_another_s1": 49.37,
+  "top_shared_names": {
+   "meridian": 559,
+   "cedar": 346,
+   "cascade": 328,
+   "summit": 327,
+   "family center": 326,
+   "helios": 319,
+   "sterling": 312,
+   "granite": 309,
+   "sapphire": 309,
+   "ear nose throat group": 308,
+   "lynx": 307,
+   "pinnacle": 307,
+   "amber": 305,
+   "ember": 301,
+   "slate": 299
+  }
+ },
+ "exact_name_core_blocking_precision": {
+  "pairs": 2508430,
+  "true": 87586,
+  "false": 2420844,
+  "precision_pct": 3.49
+ },
+ "distractors": {
+  "S2_unmatched_pct": 26.64,
+  "S3_unmatched_pct": 25.37,
+  "unmatched_name_core_in_s1_pct": 25.51,
+  "matched_name_core_in_s1_pct": 62.3,
+  "unmatched_addr_empty_pct": 0.29,
+  "matched_addr_empty_pct": 4.41,
+  "unmatched_translit_pct": 7.52,
+  "matched_translit_pct": 7.22
+ },
+ "cluster_size_by_country": {
+  "India": {
+   "count": 883188.0,
+   "mean": 3.465,
+   "std": 1.706,
+   "min": 0.0,
+   "25%": 2.0,
+   "50%": 3.0,
+   "75%": 5.0,
+   "max": 11.0
+  },
+  "US": {
+   "count": 1323633.0,
+   "mean": 3.459,
+   "std": 1.705,
+   "min": 0.0,
+   "25%": 2.0,
+   "50%": 3.0,
+   "75%": 5.0,
+   "max": 11.0
+  }
+ },
+ "singleton_rate_by_name_ntok": {
+  "0": 0.0,
+  "1": 5.72,
+  "2": 5.6,
+  "3": 5.56,
+  "4": 5.52,
+  "5": 5.58,
+  "6": 5.63,
+  "7": 5.7
+ },
+ "singleton_rate_by_legal": {
+  "llc lp": 10.0,
+  "ei inc": 12.5,
+  "lp ltd": 12.5,
+  "gmbh ltd pvt": 13.64,
+  "co pvt": 14.29,
+  "pc pvt": 16.67,
+  "inc lp": 20.0,
+  "ei llc": 22.22,
+  "corp sas": 25.0,
+  "llc sa": 25.0,
+  "llp sas": 25.0,
+  "llp lp": 33.33
+ },
+ "blocking_key_recall_val": {
+  "name_core_exact": {
+   "pair_recall_pct": 59.27,
+   "candidates": 12805261,
+   "cands_per_s1": 58.2,
+   "max_block_raw": 2466,
+   "pct_s1_in_dropped_oversize_blocks": 0.0
+  },
+  "name_first_tok+state": {
+   "pair_recall_pct": 75.4,
+   "candidates": 64383021,
+   "cands_per_s1": 292.5,
+   "max_block_raw": 22214,
+   "pct_s1_in_dropped_oversize_blocks": 6.54
+  },
+  "name_first_tok": {
+   "pair_recall_pct": 42.55,
+   "candidates": 30740835,
+   "cands_per_s1": 139.6,
+   "max_block_raw": 63714,
+   "pct_s1_in_dropped_oversize_blocks": 49.65
+  },
+  "house+first_street_tok": {
+   "pair_recall_pct": 48.69,
+   "candidates": 16157667,
+   "cands_per_s1": 73.4,
+   "max_block_raw": 91655,
+   "pct_s1_in_dropped_oversize_blocks": 8.76
+  },
+  "UNION": {
+   "pair_recall_pct": 91.16,
+   "candidates": 117995380,
+   "cands_per_s1": 536.0
+  }
+ },
+ "test_country_profile": [
+  {
+   "src": "S1",
+   "country": "France",
+   "n": 259452,
+   "addr_empty_pct": 0.0,
+   "state_found_pct": 100.0,
+   "legal_found_pct": 68.92,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S1",
+   "country": "India",
+   "n": 809986,
+   "addr_empty_pct": 0.0,
+   "state_found_pct": 100.0,
+   "legal_found_pct": 84.26,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S1",
+   "country": "US",
+   "n": 663106,
+   "addr_empty_pct": 0.0,
+   "state_found_pct": 100.0,
+   "legal_found_pct": 53.6,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S2",
+   "country": "France",
+   "n": 703378,
+   "addr_empty_pct": 3.06,
+   "state_found_pct": 64.24,
+   "legal_found_pct": 56.26,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S2",
+   "country": "India",
+   "n": 2312565,
+   "addr_empty_pct": 2.28,
+   "state_found_pct": 97.72,
+   "legal_found_pct": 79.82,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S2",
+   "country": "US",
+   "n": 1871330,
+   "addr_empty_pct": 2.94,
+   "state_found_pct": 97.06,
+   "legal_found_pct": 49.64,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S3",
+   "country": "France",
+   "n": 731615,
+   "addr_empty_pct": 2.94,
+   "state_found_pct": 65.92,
+   "legal_found_pct": 55.4,
+   "alias_pct": 1.76
+  },
+  {
+   "src": "S3",
+   "country": "India",
+   "n": 2405000,
+   "addr_empty_pct": 2.46,
+   "state_found_pct": 97.54,
+   "legal_found_pct": 77.5,
+   "alias_pct": 1.65
+  },
+  {
+   "src": "S3",
+   "country": "US",
+   "n": 1945701,
+   "addr_empty_pct": 2.84,
+   "state_found_pct": 97.16,
+   "legal_found_pct": 49.03,
+   "alias_pct": 2.65
+  }
+ ],
+ "train_country_profile": [
+  {
+   "src": "S1",
+   "country": "India",
+   "n": 883188,
+   "addr_empty_pct": 0.0,
+   "state_found_pct": 100.0,
+   "legal_found_pct": 84.29,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S1",
+   "country": "US",
+   "n": 1323633,
+   "addr_empty_pct": 0.0,
+   "state_found_pct": 100.0,
+   "legal_found_pct": 53.61,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S2",
+   "country": "India",
+   "n": 2017799,
+   "addr_empty_pct": 2.87,
+   "state_found_pct": 97.13,
+   "legal_found_pct": 78.55,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S2",
+   "country": "US",
+   "n": 3016817,
+   "addr_empty_pct": 3.68,
+   "state_found_pct": 96.32,
+   "legal_found_pct": 47.63,
+   "alias_pct": 0.0
+  },
+  {
+   "src": "S3",
+   "country": "India",
+   "n": 2115547,
+   "addr_empty_pct": 3.07,
+   "state_found_pct": 96.93,
+   "legal_found_pct": 75.76,
+   "alias_pct": 2.06
+  },
+  {
+   "src": "S3",
+   "country": "US",
+   "n": 3170056,
+   "addr_empty_pct": 3.5,
+   "state_found_pct": 96.5,
+   "legal_found_pct": 46.94,
+   "alias_pct": 3.26
+  }
+ ],
+ "france_top_legal": {
+  "<none>": 714545,
+  "sarl": 371757,
+  "sas": 252671,
+  "eurl": 100706,
+  "sa": 82146,
+  "sasu": 73633,
+  "sci": 63582,
+  "ei": 18379,
+  "snc": 14747,
+  "co": 556,
+  "pc": 483,
+  "lp": 233
+ },
+ "france_top_core_tokens": {
+  "france": 162796,
+  "club": 129563,
+  "de": 104210,
+  "s": 99563,
+  "ecole": 88093,
+  "amicale": 83764,
+  "comite": 80895,
+  "du": 63423,
+  "maison": 62836,
+  "centre": 58391,
+  "a": 57957,
+  "groupe": 56093,
+  "union": 51214,
+  "developpement": 49101,
+  "fils": 48946,
+  "sportive": 46962,
+  "des": 46310,
+  "cie": 41918,
+  "amis": 40021,
+  "college": 39977,
+  "federation": 39816,
+  "primaire": 36847,
+  "international": 34757,
+  "participations": 34281,
+  "distribution": 34273,
+  "holding": 34000,
+  "pharmacie": 33355,
+  "la": 32814,
+  "saint": 32650,
+  "etablissements": 32568
+ }
+}
