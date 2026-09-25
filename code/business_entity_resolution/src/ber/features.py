@@ -20,6 +20,7 @@ REC_COLS = ["entity_id", "name_norm", "name_core", "name_legal", "name_alias", "
             "name_is_translit", "addr_norm", "addr_state", "addr_house", "addr_numbers", "addr_postcode"]
 RANK_COLS = ["rank_name", "rank_addr", "rank_comb", "rank_rcomb", "rank_rname"]
 NO_RANK = 99
+CP_WORKERS = -1  # rapidfuzz threads; set to 1 inside multiprocessing workers
 
 
 def load_records(proc, split: str) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -38,7 +39,7 @@ def token_idf(texts: pd.Series) -> dict[str, float]:
 
 
 def _cp(a, b, scorer) -> np.ndarray:
-    return process.cpdist(list(a), list(b), scorer=scorer, workers=-1).astype(np.float32)
+    return process.cpdist(list(a), list(b), scorer=scorer, workers=CP_WORKERS).astype(np.float32)
 
 
 def idf_overlap(a: pd.Series, b: pd.Series, idf: dict, default: float) -> tuple[np.ndarray, np.ndarray]:
@@ -87,8 +88,8 @@ def pairwise_features(cand: pd.DataFrame, s1: pd.DataFrame, oth: pd.DataFrame, i
     f = pd.DataFrame(index=cand.index)
     f["src_s3"] = (cand.m.str[:2] == "S3").astype(np.int8).values
     for c in RANK_COLS:
-        f[c] = cand[c].replace(0, NO_RANK).astype(np.int16).values
-    f["n_retrievers"] = (cand[RANK_COLS] > 0).sum(axis=1).astype(np.int8).values
+        f[c] = cand[c].replace(0, NO_RANK).astype(np.int16).values if c in cand else np.int16(NO_RANK)
+    f["n_retrievers"] = (f[RANK_COLS] < NO_RANK).sum(axis=1).astype(np.int8).values
     f["cos_name"] = cand.cos_name.values
     f["cos_addr"] = cand.cos_addr.values
     f["cos_mean"] = (f.cos_name + f.cos_addr) / 2
@@ -128,6 +129,8 @@ def pairwise_features(cand: pd.DataFrame, s1: pd.DataFrame, oth: pd.DataFrame, i
     f["house"] = house_match(L.addr_house, R.addr_house)
     f["state_eq"] = field_eq(L.addr_state, R.addr_state)
     f["postcode_eq"] = field_eq(L.addr_postcode, R.addr_postcode)
+    for c in f.columns[f.dtypes == np.float64]:
+        f[c] = f[c].astype(np.float32)
     return f
 
 

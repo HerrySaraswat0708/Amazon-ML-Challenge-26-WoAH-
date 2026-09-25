@@ -34,6 +34,8 @@ _G: dict = {}
 
 # --------------------------------------------------------------------------- feature building
 def _feat_chunk(bounds):
+    from . import features
+    features.CP_WORKERS = 1
     a, b = bounds
     return pairwise_features(_G["cand"].iloc[a:b], _G["s1"], _G["oth"], _G["idf"])
 
@@ -92,11 +94,25 @@ def macro_f05(pred: dict, truth: dict, s1_ids) -> float:
     return float(np.mean([f05_entity(pred.get(s, set()), truth.get(s, set())) for s in s1_ids]))
 
 
-def tune_threshold(F: pd.DataFrame, p: np.ndarray, truth: dict, s1_ids, grid=None) -> tuple[float, dict]:
-    grid = grid if grid is not None else np.round(np.arange(0.20, 0.96, 0.025), 3)
-    scores = {float(t): macro_f05(assign(F, p, t), truth, s1_ids) for t in grid}
-    best = max(scores, key=scores.get)
-    return best, scores
+def f05_curve(F: pd.DataFrame, p: np.ndarray, n_true: pd.Series, grid) -> dict[float, float]:
+    """Macro F0.5 over all entities in n_true.index for each threshold, vectorized.
+
+    The best S1 per record does not depend on the threshold, so it is computed once;
+    a threshold then only filters. n_true counts every true pair (also those blocking lost).
+    """
+    d = pd.DataFrame({"s1": F.s1.values, "m": F.m.values, "y": F.label.values, "p": p})
+    d = d.sort_values("p", ascending=False, kind="stable").drop_duplicates("m")
+    nt = n_true.values.astype(np.float64)
+    out = {}
+    for t in grid:
+        g = d[d.p >= t].groupby("s1").agg(tp=("y", "sum"), n=("y", "size")).reindex(n_true.index, fill_value=0)
+        tp, n = g.tp.values.astype(np.float64), g.n.values.astype(np.float64)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            P, R = tp / n, tp / nt
+            f = np.where(tp > 0, 1.25 * P * R / (0.25 * P + R), 0.0)
+        f = np.where(nt == 0, (n == 0).astype(np.float64), f)
+        out[float(t)] = float(f.mean())
+    return out
 
 
 # --------------------------------------------------------------------------- training
@@ -146,23 +162,27 @@ def train(proc: Path, train_s1: int, rounds: int, seed: int = 0) -> None:
     pairs = pd.read_parquet(proc / "train_pairs.parquet")
     val_ids = split.index[split == "val"]
     vp = pairs[pairs.s1.isin(set(val_ids))]
-    truth = vp.groupby("s1").m.apply(set).to_dict()
     report = {"cols_pass1": cols1, "cols_pass2": cols2}
+    n_true = vp.groupby("s1").size().reindex(val_ids, fill_value=0)
+    cty = pd.read_parquet(proc / "train_source1.parquet", columns=["entity_id", "country"]).set_index("entity_id").country
+    grid = np.round(np.arange(0.20, 0.96, 0.025), 3)
     for name, p in (("pass1", val.p1.values), ("pass2", p2)):
-        t, curve = tune_threshold(val, p, truth, val_ids)
-        pred = assign(val, p, t)
+        curve = f05_curve(val, p, n_true, grid)
+        t = max(curve, key=curve.get)
         f_by = {}
-        cty = pd.read_parquet(proc / "train_source1.parquet", columns=["entity_id", "country"]).set_index("entity_id").country
         for c in sorted(cty.reindex(val_ids).unique()):
-            ids = [s for s in val_ids if cty[s] == c]
-            f_by[c] = round(macro_f05(pred, truth, ids), 5)
-        tp = sum(len(pred.get(s, set()) & truth.get(s, set())) for s in val_ids)
-        npred = sum(len(v) for v in pred.values())
+            ids = n_true.index[cty.reindex(n_true.index).values == c]
+            sel = val.s1.isin(set(ids)).values
+            f_by[c] = round(f05_curve(val[sel], p[sel], n_true.loc[ids], [t])[t], 5)
+        best = pd.DataFrame({"m": val.m.values, "y": val.label.values, "p": p}) \
+            .sort_values("p", ascending=False).drop_duplicates("m")
+        kept = best[best.p >= t]
+        pp, pr = kept.y.mean(), kept.y.sum() / len(vp)
         report[name] = {"threshold": t, "macro_f05": round(curve[t], 5), "by_country": f_by,
-                        "pair_precision": round(tp / max(1, npred), 5), "pair_recall": round(tp / len(vp), 5),
+                        "pair_precision": round(float(pp), 5), "pair_recall": round(float(pr), 5),
                         "curve": {str(k): round(v, 5) for k, v in curve.items()}}
         print(f"{name}: threshold={t} macro F0.5={curve[t]:.5f} by country {f_by} "
-              f"pairP={tp/max(1,npred):.4f} pairR={tp/len(vp):.4f}", flush=True)
+              f"pairP={pp:.4f} pairR={pr:.4f}", flush=True)
     imp = pd.Series(m2.feature_importance("gain"), index=cols2).sort_values(ascending=False)
     report["importance_pass2"] = (imp / imp.sum()).round(4).head(30).to_dict()
     json.dump(report, open(MODEL_DIR / "train_report.json", "w"), indent=1)

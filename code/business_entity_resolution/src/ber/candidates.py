@@ -57,25 +57,35 @@ def rowwise_cos(A: sparse.csr_matrix, B: sparse.csr_matrix, ia: np.ndarray, ib: 
 
 
 # --------------------------------------------------------------------------- GPU top-k
+def _to_torch_csr(M: sparse.csr_matrix, device: str):
+    import torch
+    M = M.tocsr()
+    return torch.sparse_csr_tensor(torch.from_numpy(M.indptr.astype(np.int32)),
+                                   torch.from_numpy(M.indices.astype(np.int32)),
+                                   torch.from_numpy(M.data.astype(np.float32)), size=M.shape, device=device)
+
+
 def gpu_topk(Q: sparse.csr_matrix, D: sparse.csr_matrix, k: int, device: str,
              chunk: int = 512) -> tuple[np.ndarray, np.ndarray]:
-    """Top-k columns of Q @ D.T per row, computed as sparse(D) @ dense(Q_chunk).T on GPU."""
+    """Top-k columns of Q @ D.T per row.
+
+    Computed as sparse(D) @ dense(Q_chunk.T) on GPU. The query chunk is shipped sparse and
+    densified on the device (a CPU toarray + transpose is ~100x slower), and top-k runs along
+    contiguous rows of the transposed score block.
+    """
     import torch
 
     k = min(k, D.shape[0])
-    Dc = D.tocsr()
-    Dt = torch.sparse_csr_tensor(torch.from_numpy(Dc.indptr.astype(np.int64)),
-                                 torch.from_numpy(Dc.indices.astype(np.int64)),
-                                 torch.from_numpy(Dc.data), size=Dc.shape, device=device)
+    Dt = _to_torch_csr(D, device)
     idx_out = np.empty((Q.shape[0], k), dtype=np.int64)
     val_out = np.empty((Q.shape[0], k), dtype=np.float32)
     with torch.no_grad():
         for s in range(0, Q.shape[0], chunk):
-            q = torch.from_numpy(Q[s:s + chunk].toarray()).to(device)       # (c, V)
-            S = torch.sparse.mm(Dt, q.T)                                    # (nD, c)
-            v, i = S.topk(k, dim=0)                                         # (k, c)
-            idx_out[s:s + chunk] = i.T.cpu().numpy()
-            val_out[s:s + chunk] = v.T.cpu().numpy()
+            q = _to_torch_csr(Q[s:s + chunk].T.tocsr(), device).to_dense()  # (V, c)
+            S = torch.sparse.mm(Dt, q).T.contiguous()                       # (c, nD)
+            v, i = S.topk(k, dim=1)
+            idx_out[s:s + chunk] = i.cpu().numpy()
+            val_out[s:s + chunk] = v.cpu().numpy()
             del S, q
     del Dt
     torch.cuda.empty_cache()
